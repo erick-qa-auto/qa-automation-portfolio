@@ -25,7 +25,8 @@ def test_apod_fields_present():
     data = response.json()
     assert "date" in data
     assert "explanation" in data
-    assert "media_type" in ["image", "video"]
+    assert "media_type" in data
+    assert data["media_type"] in ["image", "video"]
     assert "service_version" in data
     assert "title" in data
     assert "url" in data
@@ -52,7 +53,7 @@ def test_check_url():
     data = response.json()
     media_response = requests.get(data["url"])
     assert media_response.status_code == 200
-    assert ["url"], startswith("https://")
+    assert data["url"].startswith("https://")
     content_type = media_response.headers["Content-Type"]
     assert content_type.startswith("video/") or content_type.startswith("image/")
 
