@@ -61,7 +61,7 @@ def test_check_url():
 #проверка bonduaries date граничное значение даты
 
 def test_apod_date_boudaries():
-    bad_dates = ["2099-01-01, 1899-01-01"]
+    bad_dates = ["2099-01-01", "1899-01-01"]
     for date in bad_dates:
         url = f"{BASE_URL}&date={date}"
         response = requests.get(url)
@@ -73,7 +73,7 @@ def test_apod_date_before_after():
     assert response_main.status_code == 200
     title_main = response_main.json()["title"] # запомнили title в переменную
     #день позже
-    url_after = f"{BASE_URL}&date=2026-08-31"
+    url_after = f"{BASE_URL}&date=2026-09-02"
     response_after = requests.get(url_after)
     if response_after.status_code == 200:
     # если ок то title отличается
@@ -82,7 +82,7 @@ def test_apod_date_before_after():
         #пришла ошибка title не трогаем, просто фиксируем
         print("день позже дал ошибку, статус:", response_after.status_code)
     #день раньше
-    url_before = f"{BASE_URL}&date=2026-09-02"
+    url_before = f"{BASE_URL}&date=2026-08-31"
     response_before = requests.get(url_before)
     if response_before.status_code == 200:
         assert response_before.json()["title"] != title_main
